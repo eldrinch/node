@@ -1,4 +1,4 @@
-//visit and read documentation https://nodejs.org
+//visit and read documentation https://nomoduledejs.org
 
 // const hello = 'Hello world';
 // console.log(hello);
@@ -35,7 +35,7 @@ const url = require("url");
 // });
 // console.log(`Will read file!`);
 
-//############ 16 PARSING VARAIBLES FROM URLS ############
+//############ 14, 15 HTML TEMPLATE, BUILDING THE TEMPLATES, FILLING THE TEMPLATES ############
 
 const replaceTemplate = (temp, product) => {
   let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
@@ -60,28 +60,24 @@ const dataObj = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
 
-  const {query, pathname} = (url.parse(req.url, true));
+  console.log(req.url);
+  const pathName = req.url;
 
   //Overview page
-  if (pathname === "/" || pathname === "/overview") {
+  if (pathName === "/" || pathName === "/overview") {
     res.writeHead(200, { "Content-type": "text/html" });
     //generate a new array
-    const cardsHtml = dataObj.map((el) => {return replaceTemplate(tempCard, el)}).join('');
+    const cardsHtml = dataObj.map((el) => {return replaceTemplate(tempCard, el);}).join('');
     const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHtml)
-    // console.log(cardsHtml);
-    // console.log(output);
+
     res.end(output);
 
     //Product page
-  } else if (pathname === "/product") {
-    // console.log(query);
-    res.writeHead(200, { "Content-type": "text/html" });
-    const product = dataObj[query.id]
-    const output =  replaceTemplate(tempProduct, product);
-    res.end(output);
+  } else if (pathName === "/product") {
+    res.end("This is the PRODUCT");
 
     //API
-  } else if (pathname === "/api") {
+  } else if (pathName === "/api") {
     res.writeHead(200, { "Content-type": "application/json" });
     res.end(data);
     // fs.readFile(`${__dirname}/dev-data/data.json`,'utf-8',(err, data)=>{

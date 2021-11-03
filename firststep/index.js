@@ -68,13 +68,15 @@ const server = http.createServer((req, res) => {
     //generate a new array
     const cardsHtml = dataObj.map((el) => {return replaceTemplate(tempCard, el)}).join('');
     const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHtml)
-    // console.log(cardsHtml);
+    //console.log(cardsHtml);
     // console.log(output);
     res.end(output);
 
     //Product page
   } else if (pathname === "/product") {
-    // console.log(query);
+    console.log(req.url);
+    console.log(url.parse(req.url));
+    console.log(query);
     res.writeHead(200, { "Content-type": "text/html" });
     const product = dataObj[query.id]
     const output =  replaceTemplate(tempProduct, product);

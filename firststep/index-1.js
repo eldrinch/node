@@ -1,4 +1,4 @@
-//visit and read documentation https://nomoduledejs.org
+//visit and read documentation https://nodejs.org
 
 // const hello = 'Hello world';
 // console.log(hello);

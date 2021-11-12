@@ -1,19 +1,15 @@
 //visit and read documentation https://nodejs.org
-//visit https://www.npmjs.com/
 
 // const hello = 'Hello world';
 // console.log(hello);
 
 //Bloking, synchronous way
-
-//############ 20 THIRD-PARTY MODULES, 21 VERSION AUPDATING  ############
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
-
-const slugify = require('slugify');
-
 const replaceTemplate = require('./modules/replaceTemplate');
+
+//############ 17 USING MODULES ############
 
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template-overview.html`,
@@ -31,10 +27,6 @@ const tempProduct = fs.readFileSync(
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
 
-const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
-console.log(slugs);
-// console.log(slugify('Fresh Avocados', { lower: true }));
-
 const server = http.createServer((req, res) => {
   //Create the absolute URL. Combine baseurl with relative path(comes from req.url)
   const baseURL = `http://${req.headers.host}`; // return http://localhost:8000
@@ -51,7 +43,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-type': 'text/html' });
     //generate a new array
     const cardsHtml = dataObj
-      .map((el) => {
+      .map(el => {
         return replaceTemplate(tempCard, el);
       })
       .join('');
